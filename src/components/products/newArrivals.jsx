@@ -47,21 +47,25 @@ const NewArrivals = () => {
   const skeletonCount = 5;
 
   return (
-    <div className="py-12 bg-gray-50 relative">
-      <div className='flex justify-between items-center w-[98%] md:w-11/12 mx-auto mb-8'>
-        <h2 className="text-2xl lg:text-3xl font-medium text-mainclr">
-          {isLoading ? <Skeleton width={150} /> : 'New Arrivals'}
-        </h2>
-        {!isLoading && !error && (
-          <button 
-            onClick={handleViewAll}
-            className='capitalize flex items-center gap-2 text-mainclr hover:text-mainhvr transition-colors'
-          >
-            <p>view all</p>
-            <IoIosArrowRoundForward className='text-2xl' />
-          </button>
-        )}
-      </div>
+<div className={`${products.length > 0 || isLoading ? 'py-12' : 'py-0'} bg-gray-50 relative`}>
+    {/* Header - Only show when loading or when products are available */}
+{(isLoading || (!error && products.length > 0)) && (
+  <div className='flex justify-between items-center w-[98%] md:w-11/12 mx-auto mb-8'>
+    <h2 className="text-2xl lg:text-3xl font-medium text-black">
+      {isLoading ? <Skeleton width={150} /> : 'New Arrivals'}
+    </h2>
+    {!isLoading && products.length > 0 && (
+      <button
+        onClick={handleViewAll}
+        className='capitalize flex items-center gap-2 text-mainclr hover:text-mainhvr transition-colors'
+      >
+        <p>view all</p>
+        <IoIosArrowRoundForward className='text-2xl' />
+      </button>
+    )}
+  </div>
+)}
+
 
       {/* Error Message */}
       {error && (

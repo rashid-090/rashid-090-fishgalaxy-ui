@@ -99,7 +99,7 @@ const Products = () => {
           search={search}
           setSearch={setSearch}
         />
-        <div className="flex justify-between items-center font-semibold">
+        <div className="flex justify-between items-center font-semibold pt-4">
           <div>
             <h1 className="font-bold text-2xl">Products</h1>
           </div>

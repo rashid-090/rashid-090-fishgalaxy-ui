@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Autoplay } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import 'swiper/css/autoplay';
-import { IoMdCart } from 'react-icons/io';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/autoplay";
+import { IoMdCart } from "react-icons/io";
+import { Link, useNavigate } from "react-router-dom";
 import { IoIosArrowRoundBack, IoIosArrowRoundForward } from "react-icons/io";
-import axios from 'axios';
-import { URL } from '../../Common/api';
-import { config } from '../../Common/configurations';
-import Skeleton from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css';
-import ProductCard from './ProductCard';
+import axios from "axios";
+import { URL } from "../../Common/api";
+import { config } from "../../Common/configurations";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import ProductCard from "./ProductCard";
 
 const BestOffers = () => {
   const [products, setProducts] = useState([]);
@@ -27,11 +27,11 @@ const BestOffers = () => {
       setIsLoading(true);
       setError(null);
       const { data } = await axios.get(`${URL}/user/offerProducts`, config);
-      console.log(data)
+      console.log(data);
       setProducts(data.products || []);
     } catch (err) {
       console.error(err);
-      setError('Failed to load best offers. Please try again later.');
+      setError("Failed to load best offers. Please try again later.");
     } finally {
       setIsLoading(false);
     }
@@ -39,7 +39,7 @@ const BestOffers = () => {
 
   const handleViewAll = () => {
     // Navigate to shop page with filter for offer products
-    navigate('/shop?isOfferProduct=true');
+    navigate("/shop?isOfferProduct=true");
   };
 
   useEffect(() => {
@@ -49,25 +49,25 @@ const BestOffers = () => {
   // Skeleton loading count based on screen size
   const skeletonCount = 5;
 
-
-
   return (
-    <div className="py-12 bg-gray-50 relative">
-       
-      <div className='flex justify-between items-center w-[98%] md:w-11/12 mx-auto mb-8'>
-        <h2 className="text-2xl lg:text-3xl font-medium text-black">
-          {isLoading ? <Skeleton width={150} /> : 'Best Offers'}
-        </h2>
-        {!isLoading && !error && (
-          <button
-            onClick={handleViewAll}
-            className='capitalize flex items-center gap-2 text-mainclr hover:text-mainhvr transition-colors'
-          >
-            <p>view all</p>
-            <IoIosArrowRoundForward className='text-2xl' />
-          </button>
-        )}
-      </div>
+<div className={`${products.length > 0 || isLoading ? 'py-12' : 'py-0'} bg-gray-50 relative`}>
+      {/* Header - Only show when loading or when products are available */}
+      {(isLoading || (!error && products.length > 0)) && (
+        <div className="flex justify-between items-center w-[98%] md:w-11/12 mx-auto mb-8">
+          <h2 className="text-2xl lg:text-3xl font-medium text-black">
+            {isLoading ? <Skeleton width={150} /> : "Best Offers"}
+          </h2>
+          {!isLoading && products.length > 0 && (
+            <button
+              onClick={handleViewAll}
+              className="capitalize flex items-center gap-2 text-mainclr hover:text-mainhvr transition-colors"
+            >
+              <p>view all</p>
+              <IoIosArrowRoundForward className="text-2xl" />
+            </button>
+          )}
+        </div>
+      )}
 
       {/* Error Message */}
       {error && (
@@ -99,13 +99,27 @@ const BestOffers = () => {
         {isLoading ? (
           <div className="flex gap-4 overflow-hidden">
             {Array.from({ length: skeletonCount }).map((_, index) => (
-              <div key={index} className="flex-shrink-0 w-[calc(50%-10px)] sm:w-[calc(33.33%-10px)] md:w-[calc(25%-10px)] lg:w-[calc(20%-10px)]">
+              <div
+                key={index}
+                className="flex-shrink-0 w-[calc(50%-10px)] sm:w-[calc(33.33%-10px)] md:w-[calc(25%-10px)] lg:w-[calc(20%-10px)]"
+              >
                 <div className="bg-white rounded-sm overflow-hidden h-full flex flex-col border border-gray-100">
-                  <Skeleton height={200} containerClassName="aspect-square block" />
+                  <Skeleton
+                    height={200}
+                    containerClassName="aspect-square block"
+                  />
                   <div className="p-4">
                     <Skeleton width="80%" className="mx-auto" />
-                    <Skeleton width="60%" height={20} className="mt-2 mx-auto" />
-                    <Skeleton width="40%" height={16} className="mt-2 mx-auto" />
+                    <Skeleton
+                      width="60%"
+                      height={20}
+                      className="mt-2 mx-auto"
+                    />
+                    <Skeleton
+                      width="40%"
+                      height={16}
+                      className="mt-2 mx-auto"
+                    />
                     <Skeleton width="100%" height={32} className="mt-3" />
                   </div>
                 </div>
@@ -123,14 +137,14 @@ const BestOffers = () => {
             slidesPerView={2}
             loop={products.length > 1}
             navigation={{
-              prevEl: '.best-offers-prev',
-              nextEl: '.best-offers-next',
+              prevEl: ".best-offers-prev",
+              nextEl: ".best-offers-next",
             }}
             pagination={{
               clickable: true,
-              el: '.best-offers-pagination',
-              bulletClass: 'swiper-pagination-bullet',
-              bulletActiveClass: 'swiper-pagination-bullet-active',
+              el: ".best-offers-pagination",
+              bulletClass: "swiper-pagination-bullet",
+              bulletActiveClass: "swiper-pagination-bullet-active",
               renderBullet: (index, className) => {
                 return `<span class="${className} bg-indigo-400 hover:bg-mainclr w-3 h-3 mx-1 rounded-full transition-colors"></span>`;
               },

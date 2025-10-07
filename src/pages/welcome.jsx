@@ -8,7 +8,7 @@ const Welcome = () => {
   return (
     <div className="relative overflow-hidden">
       {/* about */}
-      <div className="w-[95%] md:w-11/12 mx-auto px-4 py-5 "> <img className="h-[60vh] w-full rounded-xl overflow-hidden object-cover" src={ban1} alt="" /></div>
+      <div className="w-[95%] pt-16 xl:pt-20 md:w-11/12 mx-auto px-4 py-5 "> <img className="h-[60vh] w-full rounded-xl overflow-hidden object-cover" src={ban1} alt="" /></div>
       <section className="py-10  bg-gray-50">
         <div className="w-[95%] md:w-11/12 mx-auto px-4">
           <div className="flex flex-col gap-10 gap-x-12">
